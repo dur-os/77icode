@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/dur-os/77icode/Server/common"
+	_ "github.com/dur-os/77icode/Server/model/admin"
 	"github.com/golang/glog"
 	"github.com/zenazn/goji"
 	"github.com/zenazn/goji/web"

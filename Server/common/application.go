@@ -1,7 +1,6 @@
 package common
 
 import (
-	"database/sql"
 	"html/template"
 	"os"
 	"path/filepath"
@@ -9,6 +8,8 @@ import (
 
 	"github.com/astaxie/beego/session"
 	"github.com/golang/glog"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 //Application app config and common
@@ -16,7 +17,7 @@ type Application struct {
 	Config         *Configuration
 	Template       *template.Template
 	SessionManager *session.Manager
-	DB             *sql.DB
+	DB             *gorm.DB
 }
 
 // Init is app init
@@ -27,12 +28,13 @@ func (application *Application) Init(filename *string) {
 		glog.Fatalf("ini config load failed: %s\n", err)
 	}
 
-	application.DB, err = sql.Open(application.Config.Database.Database, application.Config.Database.URL)
+	application.DB, err = gorm.Open(application.Config.Database.Database, application.Config.Database.URL)
 	if err != nil {
 		glog.Fatalf("init DB failed: %s\n", err)
 	}
-	application.DB.SetMaxOpenConns(application.Config.Database.MaxOpenConns)
-	application.DB.SetMaxIdleConns(application.Config.Database.MaxIdleConns)
+	application.DB.DB().SetMaxOpenConns(application.Config.Database.MaxOpenConns)
+	application.DB.DB().SetMaxIdleConns(application.Config.Database.MaxIdleConns)
+	AutoMigrate(application.DB)
 
 	application.SessionManager, err = session.NewManager(application.Config.Session.SessionEngine,
 		application.Config.Session.ToJsonString())
