@@ -1,3 +1,4 @@
 UI/node_modules
 Server/config.ini
 .vscode
+UI/build
