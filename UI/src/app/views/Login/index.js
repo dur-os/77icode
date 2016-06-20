@@ -1,8 +1,6 @@
 import React, { PropTypes, Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Paper, TextField, RaisedButton } from 'material-ui';
-
 
 class Login extends Component {
     static contextTypes = {

@@ -1,19 +1,17 @@
 const webpack = require('webpack');
 const path = require('path');
 const buildPath = path.resolve(__dirname, 'build');
-const nodeModulesPath = path.resolve(__dirname, 'node_modules');
-//const TransferWebpackPlugin = require('transfer-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const config = {
   // Entry points to the project
   entry: [
     'webpack-hot-middleware/client',
-    path.join(__dirname, '/src/app/app.js'),
+    path.join(__dirname, '/src/app/app.js')
   ],
   output: {
     path: buildPath, // Path of output file
-    filename: 'app.js',
+    filename: 'app.js'
   },
   plugins: [
     // Enables Hot Modules Replacement
@@ -27,30 +25,14 @@ const config = {
     loaders: [{
       test: /\.js$/,
       loader: 'babel',
-      query: {
-        plugins: ['react-transform'],
-        extra: {
-          'react-transform': {
-            transforms: [{
-              transform: 'react-transform-hmr',
-              imports: ['react'],
-              locals: ['module']
-            }, {
-              transform: 'react-transform-catch-errors',
-              imports: ['react', 'redbox-react']
-            }]
-          }
-        }
-      },
-      exclude: /node_modules/,
       include: path.join(__dirname, 'src', 'app')
     }, {
       test: /\.css$/,
-      loader: ExtractTextPlugin.extract("style-loader", "css-loader"),
+      loader: ExtractTextPlugin.extract("style-loader","css-loader")
       //include: path.join(__dirname, 'src', 'app')
     }, {
       test: /\.less$/,
-      loader:  ExtractTextPlugin.extract("style-loader", "css-loader!less-loader"),
+      loader:  ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
       //include: path.join(__dirname, 'src', 'app')
     }],
   },

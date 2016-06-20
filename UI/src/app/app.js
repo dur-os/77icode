@@ -1,5 +1,5 @@
 import React from 'react';
-import {render} from 'react-dom';
+import ReactDom from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import Root from './Router'; // Our custom react component
 import './styles/main.less';
@@ -10,4 +10,4 @@ injectTapEventPlugin();
 
 // Render the main app react component into the app div.
 // For more details see: https://facebook.github.io/react/docs/top-level-api.html#react.render
-render(<Root/>, document.getElementById('app'));
+ReactDom.render(<Root />, document.getElementById('app'));
