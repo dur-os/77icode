@@ -9,6 +9,7 @@
   },
   "rules": {
     "eol-last": 2,
+    "indent": ["error", 2],
     "max-len": [2, 100, 4],
     "no-underscore-dangle": [0],
     "jsx-quotes": 2,

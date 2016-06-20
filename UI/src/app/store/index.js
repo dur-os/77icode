@@ -17,9 +17,9 @@ let store;
 
 export function initializeStore() {
 
-  const logger = createLogger({stateTransformer});
+  const logger = createLogger({ stateTransformer });
 
-  let middleWares = [thunk, promise,logger];
+  const middleWares = [thunk, promise, logger];
 
   const createStoreWithMiddleware = applyMiddleware.apply(null, middleWares)(createStore);
 
