@@ -3,12 +3,22 @@ import { Provider } from 'react-redux';
 import { Router, Route, browserHistory } from 'react-router';
 import Login from './views/Login';
 import { initializeStore } from './store';
-import withMaterialUI from './decorators/withMaterialUI';
+import MaterialThemes from './MaterialThemes';
 
 const store = initializeStore();
 
-@withMaterialUI
 class Root extends Component {
+
+  static childContextTypes = {
+    muiTheme: React.PropTypes.object
+  }
+
+  getChildContext() {
+    return {
+      muiTheme: MaterialThemes
+    };
+  }
+
   render() {
     return (
       <div>

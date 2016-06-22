@@ -20,38 +20,46 @@ class Login extends Component {
     };
   }
 
+  submit(event) {
+    if (event.type === 'keydown' && event.keyCode !== 13) return;
+
+    // const { dispatch } = this.props;
+    // const actions = bindActionCreators(AuthActions, dispatch);
+
+    const userName = this.refs.userName.state.hasValue;
+    const password = this.refs.password.state.hasValue;
+    console.log(userName, password);
+  }
+
   render() {
     const styles = this.getStyles();
     return (
       <div className="login">
         <Paper className="paper">
-          <TextField ref='userName' style={styles.text}
-                      hintText='UserName'
-                      floatingLabelText='UserName' 
-                      onKeyDown={::this.submit} /><br/>
-          <TextField ref='password'  style={styles.text}
-                      hintText='Password'
-                      floatingLabelText='Password'
-                      onKeyDown={::this.submit}
-                      type='password' /><br />
-          <RaisedButton style={styles.submit}
-                          label='Submit'
-                          onTouchTap={::this.submit}
-                          secondary={true} />
+          <TextField
+            ref="userName"
+            style={ styles.text }
+            hintText="UserName"
+            floatingLabelText="UserName"
+            onKeyDown={ ::this.submit }
+          /><br />
+          <TextField
+            ref="password"
+            style={ styles.text }
+            hintText="Password"
+            floatingLabelText="Password"
+            onKeyDown={ ::this.submit }
+            type="password"
+          /><br />
+          <RaisedButton
+            style={ styles.submit }
+            label="Submit"
+            onTouchTap={ ::this.submit }
+            secondary
+          />
         </Paper>
       </div>
     );
-  }
-
-  submit(event) {
-    if (event.type === 'keydown' && event.keyCode !== 13) return;
-
-    //const { dispatch } = this.props;
-    //const actions = bindActionCreators(AuthActions, dispatch);
-
-    const userName = this.refs.userName.state.hasValue;
-    const password = this.refs.password.state.hasValue;
-    console.log(userName,password);
   }
 }
 

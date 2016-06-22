@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const buildPath = path.resolve(__dirname, 'build');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const config = {
   // Entry points to the project
@@ -18,8 +18,7 @@ const config = {
     new webpack.HotModuleReplacementPlugin(),
     // Allows error warnings but does not stop compiling.
     new webpack.NoErrorsPlugin(),
-    new ExtractTextPlugin("app.css")
-    // Moves files
+    new ExtractTextPlugin('app.css')
   ],
   module: {
     loaders: [{
@@ -28,14 +27,12 @@ const config = {
       include: path.join(__dirname, 'src', 'app')
     }, {
       test: /\.css$/,
-      loader: ExtractTextPlugin.extract("style-loader","css-loader")
-      //include: path.join(__dirname, 'src', 'app')
+      loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
     }, {
       test: /\.less$/,
-      loader:  ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
-      //include: path.join(__dirname, 'src', 'app')
-    }],
-  },
+      loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader')
+    }]
+  }
 };
 
 module.exports = config;

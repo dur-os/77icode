@@ -5,11 +5,10 @@ import createLogger from 'redux-logger';
 import { createStore, applyMiddleware } from 'redux';
 
 // Reducers
-//import appReducer from '../reducers/reducers.js';
+// import appReducer from '../reducers/reducers.js';
 
 // Actions
-//import { setViewport } from 'viewport.js';
-
+// import { setViewport } from 'viewport.js';
 
 const stateTransformer = (state) => state.toJS();
 
@@ -24,11 +23,11 @@ export function initializeStore() {
   const createStoreWithMiddleware = applyMiddleware.apply(null, middleWares)(createStore);
 
   store = createStoreWithMiddleware(() => {});
-  //store.dispatch(setViewport(window.innerWidth));
+  // store.dispatch(setViewport(window.innerWidth));
 
   return store;
 
-};
+}
 
 // export function getStore() {
 //   return store;
