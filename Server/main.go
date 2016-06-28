@@ -7,10 +7,10 @@ import (
 	"github.com/dur-os/77icode/Server/common"
 	_ "github.com/dur-os/77icode/Server/model/admin"
 	"github.com/golang/glog"
+	_ "github.com/lib/pq"
 	"github.com/zenazn/goji"
 	"github.com/zenazn/goji/web"
-
-	_ "github.com/lib/pq"
+	"github.com/zenazn/goji/web/middleware"
 )
 
 func main() {
@@ -33,6 +33,15 @@ func main() {
 	goji.Get("/", func(c web.C, w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Thanks ok !!!!!!!!!"))
 	})
+
+	admin := web.New()
+	admin.Use(middleware.SubRouter)
+	admin.Get("/", func(c web.C, w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("1111111111111111"))
+	})
+
+	goji.Handle("/admin/*", admin)
+
 	// graceful.PostHook(func() {
 	// 	application.Close()
 	// })

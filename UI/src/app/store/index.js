@@ -1,34 +1,25 @@
-// Redux
 import thunk from 'redux-thunk';
-import promise from 'redux-promise';
 import createLogger from 'redux-logger';
-import { createStore, applyMiddleware } from 'redux';
-
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { routerReducer as routing } from 'react-router-redux';
+import api from '../middleware/Api';
+import { CALL_API } from '../domain';
 // Reducers
 // import appReducer from '../reducers/reducers.js';
 
 // Actions
 // import { setViewport } from 'viewport.js';
 
-const stateTransformer = (state) => state.toJS();
+const logger = createLogger();
 
-let store;
+const rootReducer = combineReducers({
+  routing
+});
 
-export function initializeStore() {
-
-  const logger = createLogger({ stateTransformer });
-
-  const middleWares = [thunk, promise, logger];
-
-  const createStoreWithMiddleware = applyMiddleware.apply(null, middleWares)(createStore);
-
-  store = createStoreWithMiddleware(() => {});
-  // store.dispatch(setViewport(window.innerWidth));
-
-  return store;
-
+export default function configureStore(preloadedState) {
+  return createStore(
+    rootReducer,
+    preloadedState,
+    applyMiddleware(logger, thunk, api(CALL_API))
+  );
 }
-
-// export function getStore() {
-//   return store;
-// };

@@ -15,7 +15,14 @@ class Login extends Component {
       submit: {
         marginTop: 10,
         marginBottom: 20,
+        height: 50,
         width: '100%'
+      },
+      submitLabel: {
+        textTransform: 'none',
+        fontSize: 20,
+        letterSpacing: 1,
+        fontFamily: 'Monaco,"Courier New",sans-serif'
       }
     };
   }
@@ -36,6 +43,7 @@ class Login extends Component {
     return (
       <div className="login">
         <Paper className="paper">
+          <div className="loginTitle">Sign In</div>
           <TextField
             ref="userName"
             style={ styles.text }
@@ -52,8 +60,9 @@ class Login extends Component {
             type="password"
           /><br />
           <RaisedButton
+            labelStyle={ styles.submitLabel }
             style={ styles.submit }
-            label="Submit"
+            label="Sign In"
             onTouchTap={ ::this.submit }
             secondary
           />

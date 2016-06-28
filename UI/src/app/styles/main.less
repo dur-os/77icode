@@ -5,7 +5,8 @@
 }
 
 html,body{
-    .height100
+    .height100;
+    font-family: Monaco,'Courier New',sans-serif;
 }
 
 #app{
@@ -26,6 +27,12 @@ html,body{
     max-height:100%;
     overflow:auto;
 }
+
+.loginTitle{
+    color: rgb(255, 64, 129);
+    font: 40px/2 Monaco,'Courier New',sans-serif;
+}
+
 .paper{
     max-height: 400px;
     max-width: 400px;
@@ -36,7 +43,7 @@ html,body{
 @media screen and (min-device-width:300px) and (max-device-width: 500px){
     .login{
         width: 300px;
-        height: 300px;
+        height: 400px;
         position:absolute;
         left:0;
         right:0;
@@ -48,7 +55,7 @@ html,body{
         overflow:auto;
     }
     .paper{
-        max-height: 300px;
+        max-height: 400px;
         max-width: 300px;
         text-align: center;
         padding: 20px 40px

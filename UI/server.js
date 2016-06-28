@@ -18,7 +18,7 @@ app.get('*', (req, res) => {
 });
 
 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
-app.listen(3000, '0.0.0.0', err => {
+app.listen(3100, '0.0.0.0', err => {
   if (err) {
     console.error(err);
     return;

@@ -1,9 +1,15 @@
 import React from 'react';
-import ReactDom from 'react-dom';
+import { render } from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import Root from './Router'; // Our custom react component
+import { browserHistory } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
+import configureStore from './store';
+import Root from './Root';
 import './styles/main.less';
+const store = configureStore();
+const history = syncHistoryWithStore(browserHistory, store);
 
 injectTapEventPlugin();
 
-ReactDom.render(<Root />, document.getElementById('app'));
+render(<Root store={ store } history={ history } />,
+	document.getElementById('app'));
