@@ -20,6 +20,13 @@ type Application struct {
 	DB             *gorm.DB
 }
 
+// ReturnData is restful api return data
+type ReturnData struct {
+	Code int
+	Msg  string
+	Data interface{}
+}
+
 // Init is app init
 func (application *Application) Init(filename *string) {
 	application.Config = &Configuration{}

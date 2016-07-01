@@ -26,6 +26,7 @@ func main() {
 	http.Handle("/assets/", static)
 
 	// Apply middleware
+	goji.Use(application.ApplyWriteJSON)
 	goji.Use(application.ApplyTemplates)
 	goji.Use(application.ApplySessions)
 	goji.Use(application.ApplyDB)
@@ -37,7 +38,7 @@ func main() {
 	admin := web.New()
 	admin.Use(middleware.SubRouter)
 	admin.Get("/", func(c web.C, w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("1111111111111111"))
+		w.(common.ResponseWriterJSON).WriteJSON(map[string]string{"aaaa": "aaaa"})
 	})
 
 	goji.Handle("/admin/*", admin)
