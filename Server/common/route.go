@@ -7,6 +7,7 @@ import (
 	"reflect"
 
 	"github.com/astaxie/beego/session"
+	"github.com/jinzhu/gorm"
 	"github.com/zenazn/goji"
 	"github.com/zenazn/goji/web"
 	"github.com/zenazn/goji/web/middleware"
@@ -35,6 +36,11 @@ type Controller struct {
 // GetSession is web.C get session
 func (controller *Controller) GetSession(c web.C) session.Store {
 	return c.Env["Session"].(session.Store)
+}
+
+// GetDB is web.C get DB
+func (controller *Controller) GetDB(c web.C) *gorm.DB {
+	return c.Env["DB"].(*gorm.DB)
 }
 
 //Route is web app route info
@@ -73,7 +79,6 @@ func commRoute(controller interface{}, route string) interface{} {
 
 //Init is route info init
 func Init() {
-	fmt.Println(len(regRoutes))
 	for _, route := range regRoutes {
 		var tempMux *web.Mux
 		ok := false

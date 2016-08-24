@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/dur-os/77icode/Server/common"
-	_ "github.com/dur-os/77icode/Server/controller/admin"
-	_ "github.com/dur-os/77icode/Server/model/admin"
+	_ "github.com/dur-os/77icode/Server/controller/admin/user"
+	_ "github.com/dur-os/77icode/Server/model/admin/user"
 	"github.com/golang/glog"
 	_ "github.com/lib/pq"
 	"github.com/zenazn/goji"

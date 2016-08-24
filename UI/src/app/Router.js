@@ -1,6 +1,6 @@
-import React from 'react';
-import { Route } from 'react-router';
-import Login from './views/Login';
+import React	from 'react';
+import { Route }	from 'react-router';
+import Login	from './views/Login';
 
 export default (
   <Route path="/" component={ Login }>

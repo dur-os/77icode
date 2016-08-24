@@ -1,4 +1,4 @@
-import { Schema } from 'normalizr';
+import { Schema }	from 'normalizr';
 
 
 // Action key that carries API call info interpreted by this Redux middleware.

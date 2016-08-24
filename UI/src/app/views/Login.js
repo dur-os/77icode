@@ -1,6 +1,8 @@
-import React, { PropTypes, Component } from 'react';
-import { connect } from 'react-redux';
-import { Paper, TextField, RaisedButton } from 'material-ui';
+import React, { PropTypes, Component }	from 'react';
+import { connect }	from 'react-redux';
+import { Paper, TextField, RaisedButton }	from 'material-ui';
+import { loginUser }	from '../actions/user';
+
 
 class Login extends Component {
   static contextTypes = {
@@ -32,10 +34,30 @@ class Login extends Component {
 
     // const { dispatch } = this.props;
     // const actions = bindActionCreators(AuthActions, dispatch);
-
     const userName = this.refs.userName.state.hasValue;
+    let isValidate = false;
+    if (!userName) {
+      this.refs.userName.setState(Object.assign({},
+         this.refs.userName.state, { errorText: '用户名不能为空' }));
+      isValidate = true;
+    } else {
+      this.refs.userName.setState(Object.assign({},
+         this.refs.userName.state, { errorText: '' }));
+    }
+
     const password = this.refs.password.state.hasValue;
-    console.log(userName, password);
+    if (!password) {
+      this.refs.password.setState(Object.assign({},
+         this.refs.password.state, { errorText: '密码不能为空' }));
+      isValidate = true;
+    } else {
+      this.refs.password.setState(Object.assign({},
+         this.refs.password.state, { errorText: '' }));
+    }
+    if (isValidate) {
+      return;
+    }
+    this.props.loginUser(this.refs.userName.getValue(), this.refs.password.getValue());
   }
 
   render() {
@@ -72,5 +94,16 @@ class Login extends Component {
   }
 }
 
+Login.propTypes = {
+  loginUser: React.PropTypes.func.isRequired
+};
 
-export default connect(state => ({ user: state }))(Login);
+export default connect((state, ownProps) => {
+  const { user } = state;
+  const userName = ownProps.params.name;
+  console.log('2');
+  return {
+    user,
+    userName
+  };
+}, { loginUser })(Login);

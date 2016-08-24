@@ -1,9 +1,32 @@
-import { normalize } from 'normalizr';
-import { camelizeKeys } from 'humps';
+import { normalize }	from 'normalizr';
+import { camelizeKeys }	from 'humps';
 
-function callApi(endpoint, schema) {
-  const fullUrl = endpoint; // (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint
-  return fetch(fullUrl)
+const API_ROOT = 'http://127.0.0.1:8000';
+
+function callApi(endpoint, schema, formData) {
+  const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint;
+  const params = {};
+  params.method = 'GET';
+  if (typeof formData === 'object') {
+    params.method = 'POST';
+    if (formData instanceof FormData) {
+      params.body = formData;
+    } else {
+      params.body = Object.keys(formData).map((key) => {
+        if (formData.hasOwnProperty(key)) {
+          const ukey = encodeURIComponent(key);
+          const uval = encodeURIComponent(formData[key]);
+          return `${ukey}=${uval}`;
+        }
+        return '';
+      }).join('&');
+      params.headers = {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      };
+    }
+  }
+  console.log(typeof formData);
+  return fetch(fullUrl, params)
     .then(response =>
       response.json().then(json => ({ json, response }))
     ).then(({ json, response }) => {
@@ -31,8 +54,7 @@ export default (CALL_API) => {
     }
 
     let { endpoint } = callAPI;
-    const { schema, types } = callAPI;
-
+    const { formData, schema, types } = callAPI;
     if (typeof endpoint === 'function') {
       endpoint = endpoint(store.getState());
     }
@@ -59,7 +81,7 @@ export default (CALL_API) => {
     const [requestType, successType, failureType] = types;
     next(actionWith({ type: requestType }));
 
-    return callApi(endpoint, schema).then(
+    return callApi(endpoint, schema, formData).then(
       response => next(actionWith({
         response,
         type: successType

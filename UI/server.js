@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const express = require('express');
 const path = require('path');
 const app = express();
+const port = 3100;
 
 const config = require('./webpack-dev-server.config');
 const compiler = webpack(config);
@@ -18,10 +19,10 @@ app.get('*', (req, res) => {
 });
 
 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
-app.listen(3100, '0.0.0.0', err => {
+app.listen(port, '0.0.0.0', err => {
   if (err) {
     console.error(err);
     return;
   }
-  console.warn('Listening at localhost:3000');
+  console.warn(`Listening at localhost:${port}`);
 });

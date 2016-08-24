@@ -1,7 +1,6 @@
 package common
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/zenazn/goji/web"
@@ -31,7 +30,6 @@ func (application *Application) ApplySessions(c *web.C, h http.Handler) http.Han
 		session, _ := application.SessionManager.SessionStart(w, r)
 		defer session.SessionRelease(w)
 		c.Env["Session"] = session
-		fmt.Println(web.GetMatch(*c))
 		h.ServeHTTP(w, r)
 	}
 
