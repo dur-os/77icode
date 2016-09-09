@@ -1,9 +1,10 @@
 import thunk	from 'redux-thunk';
 import createLogger	from 'redux-logger';
-import { createStore, applyMiddleware, combineReducers }	from 'redux';
-import { routerReducer as routing }	from 'react-router-redux';
+import { createStore, applyMiddleware, compose }	from 'redux';
 import api	from '../middleware/Api';
 import { CALL_API }	from '../domain';
+import rootReducer	from '../reducers';
+import DevTools from '../containers/DevTools';
 // Reducers
 // import appReducer from '../reducers/reducers.js';
 
@@ -12,14 +13,13 @@ import { CALL_API }	from '../domain';
 
 const logger = createLogger();
 
-const rootReducer = combineReducers({
-  routing
-});
-
 export default function configureStore(preloadedState) {
   return createStore(
     rootReducer,
     preloadedState,
-    applyMiddleware(logger, thunk, api(CALL_API))
+    compose(
+         applyMiddleware(logger, thunk, api(CALL_API)),
+         DevTools.instrument()
+       )
   );
 }

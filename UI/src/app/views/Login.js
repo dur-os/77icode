@@ -60,6 +60,20 @@ class Login extends Component {
     this.props.loginUser(this.refs.userName.getValue(), this.refs.password.getValue());
   }
 
+  renderErrorMessage() {
+    const { errorMessage } = this.props;
+    console.log('errr', errorMessage);
+    if (!errorMessage) {
+      return null;
+    }
+
+    return (
+      <p style={ { backgroundColor: '#e99', padding: 10 } }>
+        <b>{ errorMessage }</b>
+      </p>
+    );
+  }
+
   render() {
     const styles = this.getStyles();
     return (
@@ -88,6 +102,7 @@ class Login extends Component {
             onTouchTap={ ::this.submit }
             secondary
           />
+          { this.renderErrorMessage() }
         </Paper>
       </div>
     );
@@ -95,14 +110,15 @@ class Login extends Component {
 }
 
 Login.propTypes = {
+  errorMessage: PropTypes.string,
   loginUser: React.PropTypes.func.isRequired
 };
 
 export default connect((state, ownProps) => {
   const { user } = state;
   const userName = ownProps.params.name;
-  console.log('2');
   return {
+    errorMessage: state.errorMessage,
     user,
     userName
   };

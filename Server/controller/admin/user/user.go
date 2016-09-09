@@ -31,10 +31,10 @@ func (controller *UserController) Login(c web.C, r *http.Request) common.ReturnD
 	user := &user.AdminUser{Username: userName, Password: passWord}
 	if user.Login(controller.GetDB(c)) {
 		controller.GetSession(c).Set("userInfo", user)
-		return common.ReturnData{Code: 200, Msg: "登陆成功"}
-	} else {
-		return common.ReturnData{Code: 302, Msg: "用户名或密码错误"}
+		return common.ReturnData{Code: 200, Msg: "登陆成功", Data: user}
 	}
+	return common.ReturnData{Code: 302, Msg: "用户名或密码错误"}
+
 }
 
 func (controller *UserController) GetUser(c web.C, r *http.Request) common.ReturnData {

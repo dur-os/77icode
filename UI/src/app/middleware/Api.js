@@ -3,7 +3,7 @@ import { camelizeKeys }	from 'humps';
 
 const API_ROOT = 'http://127.0.0.1:8000';
 
-function callApi(endpoint, schema, formData) {
+function callApi(endpoint, formData) {
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint;
   const params = {};
   params.method = 'GET';
@@ -25,7 +25,6 @@ function callApi(endpoint, schema, formData) {
       };
     }
   }
-  console.log(typeof formData);
   return fetch(fullUrl, params)
     .then(response =>
       response.json().then(json => ({ json, response }))
@@ -33,14 +32,9 @@ function callApi(endpoint, schema, formData) {
       if (!response.ok) {
         return Promise.reject(json);
       }
-
       const camelizedJson = camelizeKeys(json);
       // const nextPageUrl = getNextPageUrl(response);
-
-      return Object.assign({},
-        normalize(camelizedJson, schema),
-        { }
-      );
+      return camelizedJson;
     });
 }
 
@@ -81,11 +75,19 @@ export default (CALL_API) => {
     const [requestType, successType, failureType] = types;
     next(actionWith({ type: requestType }));
 
-    return callApi(endpoint, schema, formData).then(
-      response => next(actionWith({
-        response,
-        type: successType
-      })),
+    return callApi(endpoint, formData).then(
+      response => {
+        if (response.code === 200) {
+          return next(actionWith({
+            data: normalize(response.data, schema),
+            type: successType
+          }));
+        }
+        return next(actionWith({
+          error: response.msg,
+          type: failureType
+        }));
+      },
       error => next(actionWith({
         type: failureType,
         error: error.message || 'Something bad happened'

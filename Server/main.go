@@ -8,7 +8,7 @@ import (
 	_ "github.com/dur-os/77icode/Server/controller/admin/user"
 	_ "github.com/dur-os/77icode/Server/model/admin/user"
 	"github.com/golang/glog"
-	_ "github.com/lib/pq"
+	// _ "github.com/lib/pq"
 	"github.com/zenazn/goji"
 	"github.com/zenazn/goji/web"
 )

@@ -3,6 +3,7 @@ package user
 import (
 	"crypto/md5"
 	"encoding/hex"
+	"strings"
 
 	"github.com/dur-os/77icode/Server/common"
 	"github.com/jinzhu/gorm"
@@ -29,11 +30,10 @@ func (user *AdminUser) Login(db *gorm.DB) bool {
 	password := hex.EncodeToString(m[:])
 	var userData AdminUser
 	db.Where("fusername = ? ", user.Username).First(&userData)
-	if &userData == nil || password != userData.Password {
+	if &userData == nil || !strings.EqualFold(password, userData.Password) {
 		return false
-	} else {
-		user.Password = ""
-		user.Name = userData.Name
-		return true
 	}
+	user.Password = ""
+	user.Name = userData.Name
+	return true
 }

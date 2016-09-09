@@ -3,6 +3,7 @@ import { Provider }	from 'react-redux';
 import routes	from './Router';
 import { Router }	from 'react-router';
 import MaterialThemes	from './MaterialThemes';
+import DevTools from './containers/DevTools';
 
 export default class Root extends Component {
   static childContextTypes = {
@@ -23,7 +24,10 @@ export default class Root extends Component {
     const { store, history } = this.props;
     return (
       <Provider store={ store }>
-        <Router history={ history } routes={ routes } />
+        <div>
+          <Router history={ history } routes={ routes } />
+          <DevTools />
+        </div>
       </Provider>
     );
   }
